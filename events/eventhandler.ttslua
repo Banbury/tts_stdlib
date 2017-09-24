@@ -1,0 +1,66 @@
+EventHandler = {}
+
+EventHandler.Events = {}
+
+EventHandler.Functions = {}
+
+EventHandler.Subscribers = {}
+
+EventHandler.isRunning = false
+
+function EventHandler.start()
+    EventHandler.isRunning = true
+    startLuaCoroutine(Global, "EventHandler_loop")
+end
+
+function EventHandler.stop()
+    EventHandler.isRunning = false
+end
+
+function EventHandler_subscribe(args)
+    EventHandler.Subscribers[args.guid] = getObjectFromGUID(args.guid)
+end
+
+function EventHandler_unsubscribe(args)
+    EventHandler.Subscribers[args.guid] = nil
+end
+
+function EventHandler_addEvent(args)
+    table.insert(EventHandler.Events, args)
+end
+
+function EventHandler_loop()
+    while EventHandler.isRunning do
+        if (#EventHandler.Events > 0) then
+            local payload = table.remove(EventHandler.Events, 1)
+
+            EventHandler.receive(payload)
+            for guid, receiver in pairs(EventHandler.Subscribers) do
+                receiver.call("Event_receive", payload)
+                coroutine.yield(0)
+            end
+        end
+        coroutine.yield(0)
+    end
+
+    return 1
+end
+
+function EventHandler.register(event, fn)
+    EventHandler.Functions[event] = fn
+end
+
+function EventHandler.unregister(event)
+    EventHandler.Functions[event] = nil
+end
+
+function EventHandler.receive(args)
+    local fn = EventHandler.Functions[args.event]
+    if (fn ~= nil) then
+        fn(args.args)
+    end
+end
+
+function EventHandler.send(event, args)
+    EventHandler_addEvent({ guid="Global", event=event, args=args })
+end

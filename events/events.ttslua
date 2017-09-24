@@ -1,0 +1,30 @@
+Event = {}
+
+Event.Functions = {}
+
+function Event_receive(args)
+    local fn = Event.Functions[args.event]
+    if (fn ~= nil) then
+        fn(args)
+    end
+end
+
+function Event.register(event, fn)
+    Event.Functions[event] = fn
+end
+
+function Event.unregister(event)
+    Event.Functions[event] = nil
+end
+
+function Event.send(event, args)
+    Global.call("EventHandler_addEvent", { guid=self.guid, event=event, args=args })
+end
+
+function Event.subscribe()
+    Global.call("EventHandler_subscribe", { guid=self.guid })
+end
+
+function Event.unsubscribe()
+    Global.call("EventHandler_unsubscribe", { guid=self.guid })
+end
