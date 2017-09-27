@@ -1,5 +1,5 @@
 # events
-A library for sending events bewteen objects.
+A library for sending events between objects.
 Events can be sent between objects, to and from Global and to the sender itself.
 
 ## Usage
