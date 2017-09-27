@@ -57,7 +57,7 @@ end
 function EventHandler.receive(args)
     local fn = EventHandler.Functions[args.event]
     if (fn ~= nil) then
-        fn(args.args)
+        fn(args)
     end
 end
 
