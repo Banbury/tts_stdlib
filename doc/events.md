@@ -66,3 +66,6 @@ function onHelloWorld(args)
     print("Hello " .. args.args.name .. "!")
 end
 ```
+
+## Samples
+* [Change the color of a box with events. ](http://steamcommunity.com/sharedfiles/filedetails/?id=1148587732)
