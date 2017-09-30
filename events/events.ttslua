@@ -1,3 +1,6 @@
+--- Functions for sending events between objects.
+-- @submodule Events
+
 Event = {}
 
 Event.Functions = {}
@@ -9,22 +12,48 @@ function Event_receive(args)
     end
 end
 
+--- Registers a function as an event handler.
+-- In order to receive an event with a certain name, a function has to be
+-- registered as an event handler. If an object sends an event with the same
+-- name, this function will be called.
+-- There can only be one event handler per event.
+-- The event handler function has one parameter. This parameter receives a table
+-- of arguments provided by the sender. The table always contains
+--
+-- * `guid` - the guid of the sender
+-- * `event` - the name of the event
+-- @param event Name of the event as a string.
+-- @param fn The function to be called, if the event is sent.
 function Event.register(event, fn)
     Event.Functions[event] = fn
 end
 
+--- Removes an event handler function for an event.
+-- The object will receive no further events of this name.
+-- Throws an error, if the event has not been registered before.
+-- @param event The name of an event as a string.
 function Event.unregister(event)
     Event.Functions[event] = nil
 end
 
+--- Sends an event to all subscribers.
+-- This function is used to send events from Global.
+-- @param event Name of the event as a string.
+-- @param args Table of arguments to be sent to sunscribers.
 function Event.send(event, args)
     Global.call("EventHandler_addEvent", { guid=self.guid, event=event, args=args })
 end
 
+--- Subscribes the calling object with the global event loop.
+-- This function has to be called in an object, before any events can be
+-- received.
+-- Global is subscribed automatically.
 function Event.subscribe()
     Global.call("EventHandler_subscribe", { guid=self.guid })
 end
 
+--- Unsubscribes the calling object from the global event loop.
+-- The calling object receives no event at all anymore.
 function Event.unsubscribe()
     Global.call("EventHandler_unsubscribe", { guid=self.guid })
 end

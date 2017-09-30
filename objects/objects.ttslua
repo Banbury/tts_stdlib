@@ -1,12 +1,14 @@
+--- Helper functions for dealing with groups of objects.
+-- @module Objects
+
 Objects = {}
 
 --- Find objects based on the return value of a function.
 -- The find function expects a table of objects and a function with a single parameter.
 -- This function is called once for every object, with the object as an argument.
 -- The function needs to return true for all objects, that should be found.
--- ```
--- Objects.find(getAllObjects(), function(o) return o.name!="BlockSquare" end)
--- ```
+--
+-- `Objects.find(getAllObjects(), function(o) return o.name!="BlockSquare" end)`
 -- @param o Table of objects
 -- @param fn Callback function with one parameter. Must return true or false.
 -- @return Returns a table of objects, selected by the callback function.
@@ -47,9 +49,8 @@ end
 --- Executes a function on all given objects.
 -- The callback function must have a single parameter. The function will be called
 -- once for every object, with the object as an argument.
--- ```
--- Objects.execute(objects, function(o) o.highlightOn({1, 1, 0}, 5) end)
--- ```
+--
+-- `Objects.execute(objects, function(o) o.highlightOn({1, 1, 0}, 5) end)`
 -- @param o Table of objects
 -- @param fn Callback function with one parameter and no return value.
 Objects.execute = function(o, fn)

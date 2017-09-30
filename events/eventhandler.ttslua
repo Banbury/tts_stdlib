@@ -1,3 +1,13 @@
+--- Functions for sending events between objects.
+-- EventHandler must be included in Global.
+--
+-- `#include !/events/eventhandler`
+--
+-- Events can be included in any object except Global.
+--
+-- `#include !/events/events`
+-- @module Events
+
 EventHandler = {}
 
 EventHandler.Events = {}
@@ -8,11 +18,14 @@ EventHandler.Subscribers = {}
 
 EventHandler.isRunning = false
 
+--- Starts the event loop.
+-- This function has to be called before any events can be processed.
 function EventHandler.start()
     EventHandler.isRunning = true
     startLuaCoroutine(Global, "EventHandler_loop")
 end
 
+--- Stops the event loop.
 function EventHandler.stop()
     EventHandler.isRunning = false
 end
@@ -46,11 +59,28 @@ function EventHandler_loop()
     return 1
 end
 
+--- Registers a function as an event handler.
+-- In order to receive an event with a certain name, a function has to be
+-- registered as an event handler. If an object sends an event with the same
+-- name, this function will be called.
+-- There can only be one event handler per event.
+-- The event handler function has one parameter. This parameter receives a table
+-- of arguments provided by the sender. The table always contains
+--
+-- * `guid` - the guid of the sender
+-- * `event` - the name of the event
+-- @param event Name of the event as a string.
+-- @param fn The function to be called, if the event is sent.
 function EventHandler.register(event, fn)
     EventHandler.Functions[event] = fn
 end
 
+--- Removes an event handler function for an event.
+-- The object will receive no further events of this name.
+-- Throws an error, if the event has not been registered before.
+-- @param event The name of an event as a string.
 function EventHandler.unregister(event)
+    assert(EventHandler.Functions[event] ~= nil, "This event was never registered.")
     EventHandler.Functions[event] = nil
 end
 
@@ -61,6 +91,10 @@ function EventHandler.receive(args)
     end
 end
 
+--- Sends an event to all subscribers.
+-- This function is used to send events from Global.
+-- @param event Name of the event as a string.
+-- @param args Table of arguments to be sent to sunscribers.
 function EventHandler.send(event, args)
     EventHandler_addEvent({ guid="Global", event=event, args=args })
 end
