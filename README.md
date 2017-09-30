@@ -12,3 +12,9 @@ Copy all the files into the include folder as specified in the settings of the T
 
 * [Events](doc/events.md)
     * Allows sending of custom events between objects.
+* [Objects](doc/objects.md)
+    * Functions to deal with groups of objects.
+
+## Documentation
+
+* [API](https://rawgit.com/Banbury/tts_stdlib/master/api/index.html)
