@@ -1,0 +1,136 @@
+--- Functions for vector math.
+-- `Vector` is a LUA class, that provides essential functions for calculating
+-- with vectors.
+--
+-- `#include !/vectors/vector`
+--
+-- Since vector is a class, all methods need to be called with a colon instead
+-- of a dot.
+--
+-- `local v = Vector:new()`
+--
+-- Vectors returned by Tabletop Simulator functions can be cast to `Vector` objects.
+--
+-- `local v = Vector:new(o.getPosition())`
+--
+-- And `Vector` objects can be used as input for Tabletop Simulator functions.
+--
+-- `o.setPosition(v)`
+--
+-- The class provides operators for equality (==), addition (+), and subtraction (-).
+--
+-- `local v = v1 + v2`
+-- @module Vectors
+
+Vector = {}
+
+--- Constructor for Vector class.
+-- Creates an object of type Vector. You have to use this, before you can
+-- call any other function.
+-- @param o Converts a table containng the keys x, y and z into a Vector.
+--  The result is still the same object.
+function Vector:new(o)
+    o = o or {x=0, y=0, z=0}
+    setmetatable(o, self)
+    self.__index = self
+
+    self.__tostring = function(v)
+        return (string.format("{ %.2f, %.2f, %.2f }", v.x, v.y, v.z))
+    end
+
+    self.__eq = function(v1, v2)
+        return (v1.x == v2.x) and (v1.y == v2.y) and (v1.z == v2.z)
+    end
+
+    self.__add = function(v1, v2)
+        local v = Vector:new(v1)
+        v:add(v2)
+        return v
+    end
+
+    self.__sub = function(v1, v2)
+        local v = Vector:new(v1)
+        v:subtract(v2)
+        return v
+    end
+
+    return o
+end
+
+--- Returns the length of the vector.
+-- @return Length as a float.
+function Vector:length()
+    return math.sqrt(self.x^2 + self.y^2 + self.z^2)
+end
+
+--- Normalizes the vector.
+-- Returns a new vector with the same direction but length 1.
+-- @return A new Vector.
+function Vector:normalize()
+    local v = Vector:new({x=self.x, y=self.y, z=self.z})
+    local len = v:length()
+    v.x = v.x / len
+    v.y = v.y / len
+    v.z = v.z / len
+    return v
+end
+
+--- Returns the distance between this vector and another.
+-- @param v Another vector.
+-- @return Distance as float.
+function Vector:distance(v)
+    local v = self - v
+    return v:length()
+end
+
+--- Returns the angle between this vector and another in radians.
+-- @param v Another vector.
+-- @return Angle in radians.
+function Vector:angle(v)
+    local v1 = self:normalize()
+    local v2 = v:normalize()
+    return math.acos(v1:dot(v2) / (self:length() * v:length()))
+end
+
+--- Adds a vector to this vector.
+-- The value of this vector is changed.
+-- @param v Another vector.
+function Vector:add(v)
+    self.x = self.x + v.x
+    self.y = self.y + v.y
+    self.z = self.z + v.z
+end
+
+--- Subtracts a vector from this vector.
+-- The value of this vector is changed.
+-- @param v Another vector.
+function Vector:subtract(v)
+    self.x = self.x - v.x
+    self.y = self.y - v.y
+    self.z = self.z - v.z
+end
+
+--- Multiplys this vector with a number.
+-- This changes the length of the vector.
+-- The value of this vector is changed.
+-- @param val A number.
+function Vector:multiply(val)
+    assert(type(val) == "number", "Value must be a number.")
+    self.x = self.x * val
+    self.y = self.y * val
+    self.z = self.z * val
+end
+
+--- Returns the dot product bewteen this vector and another.
+-- @param v Another vector.
+-- @return Dot product as a float.
+function Vector:dot(v)
+    return self.x * v.x + self.y * v.y + self.z * v.z
+end
+
+--- Returns the cross product bewteen this vector and another.
+-- @param v Another vector.
+-- @return A new vector.
+function Vector:cross(v)
+    return Vector:new({ self.y * v.z - self.z * v.y, self.z * v.x - self.x * v.z, self.x * v.y - self.y * v.x })
+end

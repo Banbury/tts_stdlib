@@ -1,0 +1,363 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Tabletop Simulator Standard Library</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/Events.html">Events</a></li>
+  <li><a href="../modules/Objects.html">Objects</a></li>
+  <li><strong>Vectors</strong></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>Vectors</code></h1>
+<p>Functions for vector math.</p>
+<p> <code>Vector</code> is a LUA class, that provides essential functions for calculating
+ with vectors.</p>
+
+<p> <code>#include !/vectors/vector</code></p>
+
+<p> Since vector is a class, all methods need to be called with a colon instead
+ of a dot.</p>
+
+<p> <code>local v = Vector:new()</code></p>
+
+<p> Vectors returned by Tabletop Simulator functions can be cast to <code>Vector</code> objects.</p>
+
+<p> <code>local v = Vector:new(o.getPosition())</code></p>
+
+<p> And <code>Vector</code> objects can be used as input for Tabletop Simulator functions.</p>
+
+<p> <code>o.setPosition(v)</code></p>
+
+<p> The class provides operators for equality (==), addition (+), and subtraction (-).</p>
+
+<p> <code>local v = v1 + v2</code></p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Vector:add">Vector:add (v)</a></td>
+	<td class="summary">Adds a vector to this vector.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector:angle">Vector:angle (v)</a></td>
+	<td class="summary">Returns the angle between this vector and another in radians.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector:cross">Vector:cross (v)</a></td>
+	<td class="summary">Returns the cross product bewteen this vector and another.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector:distance">Vector:distance (v)</a></td>
+	<td class="summary">Returns the distance between this vector and another.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector:dot">Vector:dot (v)</a></td>
+	<td class="summary">Returns the dot product bewteen this vector and another.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector:length">Vector:length ()</a></td>
+	<td class="summary">Returns the length of the vector.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector:multiply">Vector:multiply (val)</a></td>
+	<td class="summary">Multiplys this vector with a number.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector:new">Vector:new (o)</a></td>
+	<td class="summary">Constructor for Vector class.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector:normalize">Vector:normalize ()</a></td>
+	<td class="summary">Normalizes the vector.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Vector:subtract">Vector:subtract (v)</a></td>
+	<td class="summary">Subtracts a vector from this vector.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Vector:add"></a>
+    <strong>Vector:add (v)</strong>
+    </dt>
+    <dd>
+    Adds a vector to this vector.
+ The value of this vector is changed.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">v</span>
+         Another vector.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector:angle"></a>
+    <strong>Vector:angle (v)</strong>
+    </dt>
+    <dd>
+    Returns the angle between this vector and another in radians.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">v</span>
+         Another vector.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Angle in radians.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector:cross"></a>
+    <strong>Vector:cross (v)</strong>
+    </dt>
+    <dd>
+    Returns the cross product bewteen this vector and another.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">v</span>
+         Another vector.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        A new vector.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector:distance"></a>
+    <strong>Vector:distance (v)</strong>
+    </dt>
+    <dd>
+    Returns the distance between this vector and another.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">v</span>
+         Another vector.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Distance as float.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector:dot"></a>
+    <strong>Vector:dot (v)</strong>
+    </dt>
+    <dd>
+    Returns the dot product bewteen this vector and another.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">v</span>
+         Another vector.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Dot product as a float.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector:length"></a>
+    <strong>Vector:length ()</strong>
+    </dt>
+    <dd>
+    Returns the length of the vector.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Length as a float.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector:multiply"></a>
+    <strong>Vector:multiply (val)</strong>
+    </dt>
+    <dd>
+    Multiplys this vector with a number.
+ This changes the length of the vector.
+ The value of this vector is changed.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">val</span>
+         A number.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector:new"></a>
+    <strong>Vector:new (o)</strong>
+    </dt>
+    <dd>
+    Constructor for Vector class.
+ Creates an object of type Vector. You have to use this, before you can
+ call any other function.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">o</span>
+         Converts a table containng the keys x, y and z into a Vector.
+  The result is still the same object.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector:normalize"></a>
+    <strong>Vector:normalize ()</strong>
+    </dt>
+    <dd>
+    Normalizes the vector.
+ Returns a new vector with the same direction but length 1.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        A new Vector.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Vector:subtract"></a>
+    <strong>Vector:subtract (v)</strong>
+    </dt>
+    <dd>
+    Subtracts a vector from this vector.
+ The value of this vector is changed.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">v</span>
+         Another vector.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2017-10-01 15:24:22 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

@@ -14,6 +14,8 @@ Copy all the files into the include folder as specified in the settings of the T
     * Allows sending of custom events between objects.
 * [Objects](doc/objects.md)
     * Functions to deal with groups of objects.
+* [Vectors](https://rawgit.com/Banbury/tts_stdlib/master/api/modules/Vectors.html)
+    * Provides functions for vector math.
 
 ## Documentation
 
