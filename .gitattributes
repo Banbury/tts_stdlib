@@ -1,0 +1,3 @@
+*.ttslua linguist-language=Lua
+doc/* linguist-documentation
+api/* linguist-documentation
