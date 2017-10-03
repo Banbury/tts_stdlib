@@ -14,9 +14,9 @@ Objects = {}
 -- @return Returns a table of objects, selected by the callback function.
 Objects.find = function(o, fn)
     assert(type(o) == "table", "The first argument of exectute must be a table of objects.")
-    assert(fn != nil, "find needs a function argument.")
+    assert(fn ~= nil, "find needs a function argument.")
 
-    local ret = {}
+    local ret = {} --
 
     for key, value in pairs(o) do
         if (fn(value)) then
@@ -55,9 +55,50 @@ end
 -- @param fn Callback function with one parameter and no return value.
 Objects.execute = function(o, fn)
     assert(type(o) == "table", "The first argument of exectute must be a table of objects.")
-    assert(fn != nil, "The second argument of execute must be a function.")
+    assert(fn ~= nil, "The second argument of execute must be a function.")
 
     for key, value in pairs(o) do
         fn(value)
+    end
+end
+
+--- Executes the callback for every object in a table and collects the return value in a new table.
+--
+-- `Objects.collect(getAllObjects(), function(o) return o.guid end)`
+--
+-- This call returns the guids of all objects as a table.
+-- @param o Table of objects
+-- @param fn Callback function with one parameter. The return value will be collected.
+Objects.collect = function(o, fn)
+    assert(type(o) == "table", "The first argument of exectute must be a table of objects.")
+    assert(fn ~= nil, "The second argument of collect must be a function.")
+
+    local ret = {}
+    for key, value in pairs(o) do
+        local v = fn(value)
+        table.insert(ret, v)
+    end
+
+    return ret
+end
+
+--- Shuffles a deck of cards using the Fischer-Yates algorithm.
+-- Creates a new deck.
+-- @param o A deck.
+Objects.shuffle = function(o)
+    local cards = o.getObjects()
+    local pos = o.getPosition()
+    pos.x = pos.x + 5
+
+    for i=1, #cards-1 do
+        local j = math.random(#cards)
+        local temp = cards[i]
+        cards[i] = cards[j]
+        cards[j] = temp
+    end
+
+    for i=#cards, 1, -1 do
+        local c = o.takeObject({ guid = cards[i].guid, position = pos })
+        o.putObject(c)
     end
 end
